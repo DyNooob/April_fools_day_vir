@@ -6,6 +6,12 @@ import requests
 import win32api
 import win32con
 import psutil
+import ctypes
+
+
+
+ctypes.CDLL('./get_data.so')
+# 调用GO api支持
 
 
 status = ''
