@@ -37,41 +37,65 @@ name_dictionary = {
 
 '''Kill func'''
 def end_program(pro_name):
-  # --------
-  # 保护源码 不予提供该段代码
-  # --------
+    try:
+        os.sys.kill('%s%s' % ("taskkill /F /IM ", pro_name))
+    except:
+        pass
 
 
 '''check running'''
 
 
 def proc_exist(process_name):
-    # --------
-    # 保护源码 
-    # --------
+    pl = psutil.pids()
+    for pid in pl:
+        if psutil.Process(pid).name() == process_name:
+            return pid
+        print("done")
 
 
 '''kill'''
 
 
 def kill(name):
-  # --------
-  # 保护源码 不予提供该段代码
-  # --------
+    for proc in psutil.process_iter():
+        if proc.name() == name:
+            proc.kill()
+        else:
+            pass
 
 
 '''Get Progs'''
 def get_data():
-    # time.sleep(180) # 开机时可能没有网络 等待3min获取网络
+    time.sleep(180) # 开机时可能没有网络 等待3min获取网络
     while True:
         global status, prog_list, plan_day, plan_month, plan_hours, plan_minutes, title, get_message, POWERPNT_status, POWERPNT_message, Seewo_status, Seewo_message
         try:
             data = {
                 'message': 'april_fools_day',
             }  # Get data
-            # --------
-            # 保护源码 不予提供该段代码
-            # --------
+
+            url = "我的网络api"  # Get license url
+            resp = requests.post(url=url, data=data)  # Use post to get license
+            resp_json = resp.json()  # Turn json
+            print(resp_json)
+            # ~~JSON parsing~~
+            
+            # 根据自己api参数填写
+            
+            status = 
+            prog =
+            plan_day = 
+            plan_month =
+            plan_hours =
+            plan_minutes = 
+            title = 
+            get_message = 
+            POWERPNT_status = 
+            POWERPNT_message = 
+            Seewo_status = 
+            Seewo_message = 
+            prog_list = prog
         except:
             pass
         time.sleep(1800)
@@ -87,18 +111,10 @@ def killing(get_message, month, day, hours, minutes):
                 kill(prog)
                 print("Closed -- ", prog)
                 if status == 2:
-                    if prog == "WeChat.exe" or "DingTalk.exe":
+                    if prog == 填写蹦出提示应用包名:
                         prog_name = name_dictionary[prog]
                         message = get_message.replace("!month!", month).replace("!day!", day).replace("!prog!",prog_name)
                         win32api.MessageBox(0, message, title, win32con.MB_ICONASTERISK)
-                    elif prog == "EasiNote.exe" or "SeewoLink.exe":
-                        if Seewo_status == 1:
-                            message = Seewo_message.replace("!month!", month).replace("!day!", day).replace("!prog!",prog_name)
-                            win32api.MessageBox(0, message, title, win32con.MB_ICONASTERISK)
-                    elif prog == "POWERPNT.EXE":
-                        if POWERPNT_status == 1:
-                            message = POWERPNT_message.replace("!month!", month).replace("!day!", day).replace("!prog!", prog_name)
-                            win32api.MessageBox(0, message, title, win32con.MB_ICONASTERISK)
                     else:
                         pass
             else:
@@ -109,7 +125,7 @@ def killing(get_message, month, day, hours, minutes):
 
 get_web_data=threading.Thread(target=get_data, args=())
 get_web_data.start()
-time.sleep(2)
+time.sleep(200)
 
 
 '''while-True Check'''
